@@ -1,27 +1,38 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
-
+// 有时候我们想把某个路由下的所有组件都打包在同个异步块 (chunk) 中。只需要使用 命名 chunk，一个特殊的注释语法来提供 chunk name 
+const Login = () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+const Home = () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/login',
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: Home
+  },
 ]
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach(function (to, from, next) {
+  if (to.path == '/login') return next()
+  const token = sessionStorage.getItem('token')
+  if (!token) {
+    return next('/login')
+  }
+  next()
 })
 
 export default router
