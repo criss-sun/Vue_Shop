@@ -33,7 +33,7 @@
           <template v-slot="scope">
             <el-button type="primary" icon="el-icon-edit" @click="getEditUserId(scope.row.id)"></el-button>
             <el-button type="danger" icon="el-icon-delete" @click="getDeleteUserId(scope.row.id)"></el-button>
-            <el-button type="warning" icon="el-icon-setting"></el-button>
+            <el-button type="warning" icon="el-icon-setting" @click="getdistributionUserId(scope.row)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -79,6 +79,20 @@
         <el-button type="primary" @click="editUser">确 定</el-button>
       </div>
     </el-dialog>
+    <el-dialog title="分配角色" :visible.sync="distributionRoleDialogVisible" width="50%">
+      <div>
+        <p>当前的用户:{{username}}</p>
+        <p>当前的角色:{{roleName}}</p>
+        <el-select v-model="rid" clearable placeholder="可分配的角色">
+          <el-option v-for="item in roleList" :key="item.id" :label="item.roleName" :value="item.id">
+          </el-option>
+        </el-select>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="distributionRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="distributionRole">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -86,6 +100,7 @@
 export default {
   created() {
     this.getUserList();
+    this.getRoleList();
   },
   data() {
     return {
@@ -171,6 +186,13 @@ export default {
         ],
       },
       editUserId: 0,
+      distributionRoleDialogVisible: false,
+      // 分配角色代码
+      username: "",
+      roleName: "",
+      roleList: [],
+      rid: "",
+      userId: 0,
     };
   },
   methods: {
@@ -276,7 +298,7 @@ export default {
             const { data } = await this.$http.delete(`/users/${id}`);
             if (data.meta.status == 200) {
               this.$message.success("删除成功");
-              this.getUserList()
+              this.getUserList();
             } else {
               this.$message.error("删除失败");
             }
@@ -290,6 +312,33 @@ export default {
             });
           }.bind(this)
         );
+    },
+    // 分配角色代码
+    async getRoleList() {
+      const { data: rolesData } = await this.$http.get("/roles");
+      rolesData.data.forEach(
+        function (item) {
+          this.roleList.push({ id: item.id, roleName: item.roleName });
+        }.bind(this)
+      );
+    },
+    async getdistributionUserId(data) {
+      this.userId = data.id;
+      this.username = data.username;
+      this.roleName = data.role_Name;
+      this.distributionRoleDialogVisible = true;
+    },
+    async distributionRole() {
+      const { data } = await this.$http.put(`users/${this.userId}/role`, {
+        rid: this.rid,
+      });
+      if (data.meta.status == 200) {
+        this.getUserList();
+        this.$message.success("分配角色成功");
+      } else {
+        this.$message.error("分配角色失败");
+      }
+      this.distributionRoleDialogVisible = false;
     },
   },
 };
