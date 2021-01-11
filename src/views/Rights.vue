@@ -41,7 +41,6 @@ export default {
       if (data.meta.status == 200) {
         this.rightList = data.data;
         this.$message.success("获取权限列表成功");
-        console.log(data);
       } else {
         this.$message.error("获取权限列表失败");
       }
