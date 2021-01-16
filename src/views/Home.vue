@@ -35,12 +35,12 @@ export default {
   created() {
     this.getMenus();
     const menuId = sessionStorage.getItem("menuId");
-    this.defaultActive = menuId
+    this.defaultActive = menuId;
   },
   data() {
     return {
       menus: [],
-      defaultActive: '',
+      defaultActive: "",
       isCollapse: false,
       menuIcons: {
         125: "el-icon-user",
@@ -79,7 +79,7 @@ export default {
     },
     jump(path, id) {
       sessionStorage.setItem("menuId", id);
-      this.$router.push(path);
+      this.$router.push("/home/" + path);
     },
   },
 };

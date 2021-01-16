@@ -15,6 +15,7 @@ const Users = () => import(/* webpackChunkName: "users" */ '../views/Users.vue')
 const Roles = () => import(/* webpackChunkName: "roles" */ '../views/Roles.vue')
 const Rights = () => import(/* webpackChunkName: "roles" */ '../views/Rights.vue')
 const Goods = () => import(/* webpackChunkName: "goods" */ '../views/Goods.vue')
+const AddGoods = () => import(/* webpackChunkName: "goods" */ '../views/AddGoods.vue')
 const Params = () => import(/* webpackChunkName: "goods" */ '../views/Params.vue')
 const Categories = () => import(/* webpackChunkName: "goods" */ '../views/Categories.vue')
 const Orders = () => import(/* webpackChunkName: "orders" */ '../views/Orders.vue')
@@ -59,6 +60,11 @@ const routes = [
         path: '/home/goods',
         name: 'goods',
         component: Goods,
+      },
+      {
+        path: '/home/goods/add',
+        name: 'add',
+        component: AddGoods,
       },
       {
         path: '/home/params',
