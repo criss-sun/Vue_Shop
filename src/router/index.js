@@ -8,18 +8,18 @@ VueRouter.prototype.push = function push(location) {
 
 Vue.use(VueRouter)
 // 有时候我们想把某个路由下的所有组件都打包在同个异步块 (chunk) 中。只需要使用 命名 chunk，一个特殊的注释语法来提供 chunk name 
-const Login = () => import(/* webpackChunkName: "home" */ '../views/Login.vue')
-const Home = () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
-const Welcome = () => import(/* webpackChunkName: "home" */ '../views/Welcome.vue')
-const Users = () => import(/* webpackChunkName: "users" */ '../views/Users.vue')
-const Roles = () => import(/* webpackChunkName: "roles" */ '../views/Roles.vue')
-const Rights = () => import(/* webpackChunkName: "roles" */ '../views/Rights.vue')
-const Goods = () => import(/* webpackChunkName: "goods" */ '../views/Goods.vue')
-const AddGoods = () => import(/* webpackChunkName: "goods" */ '../views/AddGoods.vue')
-const Params = () => import(/* webpackChunkName: "goods" */ '../views/Params.vue')
-const Categories = () => import(/* webpackChunkName: "goods" */ '../views/Categories.vue')
-const Orders = () => import(/* webpackChunkName: "orders" */ '../views/Orders.vue')
-const Reports = () => import(/* webpackChunkName: "reports" */ '../views/Reports.vue')
+const Login = function () { return import(/* webpackChunkName: "home" */ '../views/Login.vue') }
+const Home = function () { return import(/* webpackChunkName: "home" */ '../views/Home.vue') }
+const Welcome = function () { return import(/* webpackChunkName: "home" */ '../views/Welcome.vue') }
+const Users = function () { return import(/* webpackChunkName: "users" */ '../views/Users.vue') }
+const Roles = function () { return import(/* webpackChunkName: "roles" */ '../views/Roles.vue') }
+const Rights = function () { return import(/* webpackChunkName: "roles" */ '../views/Rights.vue') }
+const Goods = function () { return import(/* webpackChunkName: "goods" */ '../views/Goods.vue') }
+const AddGoods = function () { return import(/* webpackChunkName: "goods" */ '../views/AddGoods.vue') }
+const Params = function () { return import(/* webpackChunkName: "goods" */ '../views/Params.vue') }
+const Categories = function () { return import(/* webpackChunkName: "goods" */ '../views/Categories.vue') }
+const Orders = function () { return import(/* webpackChunkName: "orders" */ '../views/Orders.vue') }
+const Reports = function () { return import(/* webpackChunkName: "reports" */ '../views/Reports.vue') }
 const routes = [
   {
     path: '/',
